@@ -1,10 +1,13 @@
+import { CssBaseline } from '@mui/material';
+import MainTemplate from 'components/templates/MainTemplate';
 import './App.css';
 
 const App = () => {
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
+    <>
+      <CssBaseline />
+      <MainTemplate></MainTemplate>
+    </>
   );
 };
 
