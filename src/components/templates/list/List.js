@@ -10,7 +10,7 @@ const List = () => {
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Typography variant="h4">
+      <Typography sx={{ typography: { md: 'h5', xs: 'h6' } }}>
         Restaurants, Hotels & Attractions around you
       </Typography>
       <SelectFormControl
