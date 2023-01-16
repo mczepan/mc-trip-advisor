@@ -6,10 +6,10 @@ export const fetchRestaurantsInBoundary = createAsyncThunk(
   async () =>
     await request.get('/restaurants/list-in-boundary', {
       params: {
-        bl_latitude: '11.847676',
-        tr_latitude: '12.838442',
-        bl_longitude: '109.095887',
-        tr_longitude: '109.149359',
+        bl_latitude: '53',
+        tr_latitude: '53.428543',
+        bl_longitude: '14',
+        tr_longitude: '14.552812',
       },
     })
 );
