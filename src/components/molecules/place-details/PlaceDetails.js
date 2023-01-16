@@ -8,5 +8,7 @@ const PlaceDetails = ({ place: { name } }) => {
 export default PlaceDetails;
 
 PlaceDetails.propTypes = {
-  name: PropTypes.string.isRequired,
+  place: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
 };
