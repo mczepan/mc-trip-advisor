@@ -1,22 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const URL =
-  'https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary';
+import request from 'common.js/api';
 
 export const fetchRestaurantsInBoundary = createAsyncThunk(
   'restaurants/fetchRestaurantsInBoundary',
   async () =>
-    await axios.get(URL, {
+    await request.get('/restaurants/list-in-boundary', {
       params: {
         bl_latitude: '11.847676',
         tr_latitude: '12.838442',
         bl_longitude: '109.095887',
         tr_longitude: '109.149359',
-      },
-      headers: {
-        'X-RapidAPI-Key': '0d8355b224msh51d66535f64ddebp1ec9d4jsn507c6a862b2f',
-        'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com',
       },
     })
 );

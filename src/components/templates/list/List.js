@@ -11,15 +11,11 @@ const List = () => {
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
   const dispatch = useDispatch();
-  const restaurants = useSelector((state) => state.restaurants);
+  const { restaurants } = useSelector((state) => state.restaurants);
 
   useEffect(() => {
     dispatch(fetchRestaurantsInBoundary());
-  }, []);
-
-  useEffect(() => {
-    console.log('store', restaurants);
-  }, [restaurants]);
+  }, [dispatch]);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -47,7 +43,8 @@ const List = () => {
         value={rating}
         setValue={(e) => setRating(e.target.value)}
       />
-      <PlaceList />
+
+      <PlaceList places={restaurants} />
     </Box>
   );
 };
