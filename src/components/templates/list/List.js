@@ -6,22 +6,16 @@ import { fetchRestaurantsInBoundary } from 'reducers/restaurants/restaurantsSlic
 
 import SelectFormControl from 'components/molecules/SelectFormControl/SelectFormControl';
 import PlaceList from 'components/organisms/place-list/PlaceList';
-import { fetchLocation } from 'reducers/mapCordinates/mapCordinatesSlice';
 
 const List = () => {
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
   const dispatch = useDispatch();
-  const { restaurants } = useSelector((state) => state.restaurants);
-  const mapCordinates = useSelector((state) => state.mapCordinates);
+  const { restaurants, loading } = useSelector((state) => state.restaurants);
 
   useEffect(() => {
     dispatch(fetchRestaurantsInBoundary());
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log('mapCordinates', mapCordinates);
-  }, [mapCordinates]);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -50,7 +44,11 @@ const List = () => {
         setValue={(e) => setRating(e.target.value)}
       />
 
-      <PlaceList places={restaurants} />
+      {loading ? (
+        <span>Fetching places...</span>
+      ) : (
+        <PlaceList places={restaurants} />
+      )}
     </Box>
   );
 };
