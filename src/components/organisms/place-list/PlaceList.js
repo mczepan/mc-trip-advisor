@@ -8,7 +8,7 @@ const PlaceList = ({ places }) => {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.gridContainer}>
+    <Grid container spacing={2} className={classes.gridContainer}>
       {places?.map((place) => (
         <Grid item xs={12} key={place.name}>
           <PlaceDetails place={place} key={place.name} />

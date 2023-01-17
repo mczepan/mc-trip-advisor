@@ -44,6 +44,7 @@ const List = () => {
         value={rating}
         setValue={(e) => setRating(e.target.value)}
       />
+      <br />
 
       {loading ? (
         <span>Fetching places...</span>
