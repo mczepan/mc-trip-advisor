@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography } from '@mui/material';
+
+import { fetchRestaurantsInBoundary } from 'reducers/restaurants/restaurantsSlice';
 
 import SelectFormControl from 'components/molecules/SelectFormControl/SelectFormControl';
 import PlaceList from 'components/organisms/place-list/PlaceList';
@@ -7,6 +10,13 @@ import PlaceList from 'components/organisms/place-list/PlaceList';
 const List = () => {
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
+  const dispatch = useDispatch();
+  const { restaurants, loading } = useSelector((state) => state.restaurants);
+  const { cordinates, bounds } = useSelector((state) => state.mapCordinates);
+
+  useEffect(() => {
+    dispatch(fetchRestaurantsInBoundary(bounds));
+  }, [dispatch, cordinates, bounds]);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -34,7 +44,12 @@ const List = () => {
         value={rating}
         setValue={(e) => setRating(e.target.value)}
       />
-      <PlaceList />
+
+      {loading ? (
+        <span>Fetching places...</span>
+      ) : (
+        <PlaceList places={restaurants} />
+      )}
     </Box>
   );
 };
