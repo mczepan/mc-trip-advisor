@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialStateMapCordinates = {
-  defaultCordinates: {},
-  cordinates: {},
-  bounds: {},
+  defaultCordinates: null,
+  cordinates: null,
+  bounds: null,
 };
 
 export const mapCordinates = createSlice({

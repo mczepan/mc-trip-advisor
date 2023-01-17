@@ -29,7 +29,7 @@ export const restaurantsSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchRestaurantsInBoundary.fulfilled, (state, action) => {
-      state.restaurants = action.payload.data;
+      state.restaurants = action.payload.data.data.filter((r) => r.name);
       state.loading = false;
     });
     builder.addCase(fetchRestaurantsInBoundary.rejected, (state, action) => {

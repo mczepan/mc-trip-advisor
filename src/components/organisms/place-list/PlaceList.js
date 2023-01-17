@@ -9,9 +9,9 @@ const PlaceList = ({ places }) => {
 
   return (
     <Grid container className={classes.gridContainer}>
-      {places.data?.map((place, id) => (
-        <Grid item xs={12} key={id}>
-          <PlaceDetails place={place} key={id} />
+      {places?.map((place) => (
+        <Grid item xs={12} key={place.name}>
+          <PlaceDetails place={place} key={place.name} />
         </Grid>
       ))}
     </Grid>
