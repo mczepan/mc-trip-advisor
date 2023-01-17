@@ -21,19 +21,23 @@ const Map = () => {
 
   return (
     <Box className={classes.mapWrapper}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
-        defaultCenter={defaultCordinates}
-        center={cordinates}
-        defaultZoom={14}
-        options={''}
-        onChange={(e) => {
-          dispatch(setMapCordinates({ lat: e.center.lat, lng: e.center.lng }));
-          dispatch(
-            setMapBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
-          );
-        }}
-      ></GoogleMapReact>
+      {defaultCordinates && cordinates ? (
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
+          defaultCenter={defaultCordinates}
+          center={cordinates}
+          defaultZoom={14}
+          options={''}
+          onChange={(e) => {
+            dispatch(
+              setMapCordinates({ lat: e.center.lat, lng: e.center.lng })
+            );
+            dispatch(
+              setMapBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
+            );
+          }}
+        />
+      ) : null}
     </Box>
   );
 };
