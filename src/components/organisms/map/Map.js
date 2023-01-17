@@ -13,7 +13,7 @@ const Map = () => {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { defaultCordinates, cordinates } = useSelector(
     (state) => state.mapCordinates
