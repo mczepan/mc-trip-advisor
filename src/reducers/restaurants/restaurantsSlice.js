@@ -3,13 +3,13 @@ import request from 'common.js/api';
 
 export const fetchRestaurantsInBoundary = createAsyncThunk(
   'restaurants/fetchRestaurantsInBoundary',
-  async () =>
+  async ({ ne, sw }) =>
     await request.get('/restaurants/list-in-boundary', {
       params: {
-        bl_latitude: '53',
-        tr_latitude: '53.428543',
-        bl_longitude: '14',
-        tr_longitude: '14.552812',
+        bl_latitude: sw.lat,
+        tr_latitude: ne.lat,
+        bl_longitude: sw.lng,
+        tr_longitude: ne.lng,
       },
     })
 );

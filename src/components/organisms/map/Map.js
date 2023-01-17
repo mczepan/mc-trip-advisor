@@ -15,13 +15,15 @@ const Map = () => {
   const dispatch = useDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const { cordinates } = useSelector((state) => state.mapCordinates);
+  const { defaultCordinates, cordinates } = useSelector(
+    (state) => state.mapCordinates
+  );
 
   return (
     <Box className={classes.mapWrapper}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
-        defaultCenter={cordinates}
+        defaultCenter={defaultCordinates}
         center={cordinates}
         defaultZoom={14}
         options={''}

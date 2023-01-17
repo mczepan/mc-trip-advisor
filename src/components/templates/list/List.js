@@ -12,10 +12,11 @@ const List = () => {
   const [rating, setRating] = useState('');
   const dispatch = useDispatch();
   const { restaurants, loading } = useSelector((state) => state.restaurants);
+  const { cordinates, bounds } = useSelector((state) => state.mapCordinates);
 
   useEffect(() => {
-    dispatch(fetchRestaurantsInBoundary());
-  }, [dispatch]);
+    dispatch(fetchRestaurantsInBoundary(bounds));
+  }, [dispatch, cordinates, bounds]);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
