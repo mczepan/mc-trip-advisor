@@ -8,12 +8,12 @@ import {
 } from 'reducers/mapCordinates/mapCordinatesSlice';
 import { ColorButton, SearchButton, useStyles } from './styles';
 import PlaceMarker from 'components/molecules/PlaceMarker/PlaceMarker';
+import { setActiveRestaurant } from 'reducers/restaurants/restaurantsSlice';
 
 const Map = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [activeMarker, setActiveMarker] = useState('');
   const [searchButtonVisible, setSearchButtonVisible] = useState(false);
 
   const [actualCordinates, setActualCordinates] = useState({});
@@ -25,14 +25,15 @@ const Map = () => {
 
   const { restaurants, loading } = useSelector((state) => state.restaurants);
 
-  const markerClickHandler = (activeMarkerName) => {
-    setActiveMarker(activeMarkerName);
+  const handleMarkerClick = (activeMarker) => {
+    dispatch(setActiveRestaurant(activeMarker));
   };
 
   const handleSearchButton = () => {
     dispatch(setMapCordinates(actualCordinates));
     dispatch(setMapBounds(actualBounds));
     setSearchButtonVisible(false);
+    dispatch(setActiveRestaurant({}));
   };
 
   return (
@@ -65,8 +66,7 @@ const Map = () => {
               lng={Number(restaurant.longitude)}
               place={restaurant}
               key={restaurant.name}
-              markerClickHandler={markerClickHandler}
-              activeMarker={activeMarker}
+              markerClickHandler={handleMarkerClick}
             />
           ))}
         </GoogleMapReact>

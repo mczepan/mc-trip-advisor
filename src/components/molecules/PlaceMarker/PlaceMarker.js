@@ -7,17 +7,18 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Marker from 'components/atoms/Marker/Marker';
 
 import { useStyles } from './styles';
+import { useSelector } from 'react-redux';
 
-const PlaceMarker = ({
-  place: { name, photo, rating },
-  markerClickHandler,
-  activeMarker,
-}) => {
+const PlaceMarker = ({ place, markerClickHandler }) => {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [isHovering, setIsHovering] = useState(false);
+
+  const { activeRestaurant } = useSelector((state) => state.restaurants);
+
+  const { name, photo, rating } = place;
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -37,7 +38,7 @@ const PlaceMarker = ({
       >
         {isMobile ? (
           <LocationOnOutlinedIcon color="primary" fontSize="large" />
-        ) : activeMarker === name ? (
+        ) : activeRestaurant.name === name ? (
           <LocationOnIcon
             color="primary"
             fontSize="large"
@@ -50,7 +51,7 @@ const PlaceMarker = ({
             className={classes.pointer}
             onClick={() => {
               handleMouseOut();
-              markerClickHandler(name);
+              markerClickHandler(place);
             }}
           />
         )}
