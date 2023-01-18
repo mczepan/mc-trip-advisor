@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import {
   setMapBounds,
   setMapCordinates,
 } from 'reducers/mapCordinates/mapCordinatesSlice';
-import { useStyles } from './styles';
+import { ColorButton, SearchButton, useStyles } from './styles';
 import PlaceMarker from 'components/molecules/PlaceMarker/PlaceMarker';
 
 const Map = () => {
@@ -14,6 +14,10 @@ const Map = () => {
   const dispatch = useDispatch();
 
   const [activeMarker, setActiveMarker] = useState('');
+  const [searchButtonVisible, setSearchButtonVisible] = useState(false);
+
+  const [actualCordinates, setActualCordinates] = useState({});
+  const [actualBounds, setActualBounds] = useState({});
 
   const { defaultCordinates, cordinates } = useSelector(
     (state) => state.mapCordinates
@@ -25,8 +29,23 @@ const Map = () => {
     setActiveMarker(activeMarkerName);
   };
 
+  const handleSearchButton = () => {
+    dispatch(setMapCordinates(actualCordinates));
+    dispatch(setMapBounds(actualBounds));
+    setSearchButtonVisible(false);
+  };
+
   return (
     <Box className={classes.mapWrapper}>
+      {searchButtonVisible ? (
+        <SearchButton
+          variant="contained"
+          size="small"
+          onClick={handleSearchButton}
+        >
+          Szukaj
+        </SearchButton>
+      ) : null}
       {defaultCordinates && cordinates ? (
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
@@ -35,12 +54,9 @@ const Map = () => {
           defaultZoom={14}
           options={''}
           onChange={(e) => {
-            dispatch(
-              setMapCordinates({ lat: e.center.lat, lng: e.center.lng })
-            );
-            dispatch(
-              setMapBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
-            );
+            setSearchButtonVisible(true);
+            setActualCordinates({ lat: e.center.lat, lng: e.center.lng });
+            setActualBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
           }}
         >
           {restaurants?.map((restaurant) => (
