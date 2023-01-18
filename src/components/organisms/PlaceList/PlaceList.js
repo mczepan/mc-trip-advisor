@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@mui/material';
 
-import PlaceDetails from 'components/molecules/place-details/PlaceDetails';
+import PlaceDetails from 'components/molecules/PlaceDetails/PlaceDetails';
 import { useStyles } from './styles';
 
 const PlaceList = ({ places }) => {

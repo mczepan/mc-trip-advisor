@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material';
 import { fetchRestaurantsInBoundary } from 'reducers/restaurants/restaurantsSlice';
 
 import SelectFormControl from 'components/molecules/SelectFormControl/SelectFormControl';
-import PlaceList from 'components/organisms/place-list/PlaceList';
+import PlaceList from 'components/organisms/PlaceList/PlaceList';
 
 const List = () => {
   const [type, setType] = useState('restaurants');

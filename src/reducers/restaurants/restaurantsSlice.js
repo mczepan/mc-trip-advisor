@@ -6,14 +6,15 @@ export const fetchRestaurantsInBoundary = createAsyncThunk(
   'restaurants/fetchRestaurantsInBoundary',
   async ({ ne, sw }) => await axios.get('https://www.boredapi.com/api/activity')
 
-  // await request.get('/restaurants/list-in-boundary', {
-  //   params: {
-  //     bl_latitude: sw.lat,
-  //     tr_latitude: ne.lat,
-  //     bl_longitude: sw.lng,
-  //     tr_longitude: ne.lng,
-  //   },
-  // })
+  // async ({ ne, sw }) =>
+  //   await request.get('/restaurants/list-in-boundary', {
+  //     params: {
+  //       bl_latitude: sw.lat,
+  //       tr_latitude: ne.lat,
+  //       bl_longitude: sw.lng,
+  //       tr_longitude: ne.lng,
+  //     },
+  //   })
 );
 
 const initialStateRestaurants = {
@@ -29,6 +30,7 @@ export const restaurantsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchRestaurantsInBoundary.pending, (state, action) => {
       state.loading = true;
+      state.restaurants = [];
     });
     builder.addCase(fetchRestaurantsInBoundary.fulfilled, (state, action) => {
       // state.restaurants = action.payload.data.data.filter((r) => r.name);

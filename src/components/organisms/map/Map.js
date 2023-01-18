@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
-import { Box, useMediaQuery } from '@mui/material';
-import { useTheme } from '@emotion/react';
+import { Box } from '@mui/material';
 import {
   setMapBounds,
   setMapCordinates,
 } from 'reducers/mapCordinates/mapCordinatesSlice';
 import { useStyles } from './styles';
+import PlaceMarker from 'components/molecules/PlaceMarker/PlaceMarker';
 
 const Map = () => {
   const classes = useStyles();
-  const theme = useTheme();
   const dispatch = useDispatch();
-  // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [activeMarker, setActiveMarker] = useState('');
 
   const { defaultCordinates, cordinates } = useSelector(
     (state) => state.mapCordinates
   );
+
+  const { restaurants, loading } = useSelector((state) => state.restaurants);
+
+  const markerClickHandler = (activeMarkerName) => {
+    setActiveMarker(activeMarkerName);
+  };
 
   return (
     <Box className={classes.mapWrapper}>
@@ -36,7 +42,18 @@ const Map = () => {
               setMapBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
             );
           }}
-        />
+        >
+          {restaurants?.map((restaurant) => (
+            <PlaceMarker
+              lat={Number(restaurant.latitude)}
+              lng={Number(restaurant.longitude)}
+              place={restaurant}
+              key={restaurant.name}
+              markerClickHandler={markerClickHandler}
+              activeMarker={activeMarker}
+            />
+          ))}
+        </GoogleMapReact>
       ) : null}
     </Box>
   );
