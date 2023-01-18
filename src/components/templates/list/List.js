@@ -11,7 +11,9 @@ const List = () => {
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
   const dispatch = useDispatch();
-  const { restaurants, loading } = useSelector((state) => state.restaurants);
+  const { restaurants, loading, activeRestaurant } = useSelector(
+    (state) => state.restaurants
+  );
   const { cordinates, bounds } = useSelector((state) => state.mapCordinates);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ const List = () => {
       {loading ? (
         <span>Fetching places...</span>
       ) : (
-        <PlaceList places={restaurants} />
+        <PlaceList places={restaurants} activePlace={activeRestaurant} />
       )}
     </Box>
   );

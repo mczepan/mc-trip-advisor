@@ -33,7 +33,7 @@ const Map = () => {
     dispatch(setMapCordinates(actualCordinates));
     dispatch(setMapBounds(actualBounds));
     setSearchButtonVisible(false);
-    dispatch(setActiveRestaurant({}));
+    dispatch(setActiveRestaurant(null));
   };
 
   return (
@@ -47,30 +47,31 @@ const Map = () => {
           Szukaj
         </SearchButton>
       ) : null}
-      {defaultCordinates && cordinates ? (
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
-          defaultCenter={defaultCordinates}
-          center={cordinates}
-          defaultZoom={14}
-          options={''}
-          onChange={(e) => {
-            setSearchButtonVisible(true);
-            setActualCordinates({ lat: e.center.lat, lng: e.center.lng });
-            setActualBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
-          }}
-        >
-          {restaurants?.map((restaurant) => (
-            <PlaceMarker
-              lat={Number(restaurant.latitude)}
-              lng={Number(restaurant.longitude)}
-              place={restaurant}
-              key={restaurant.name}
-              markerClickHandler={handleMarkerClick}
-            />
-          ))}
-        </GoogleMapReact>
-      ) : null}
+
+      <GoogleMapReact
+        bootstrapURLKeys={{
+          key: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+        }}
+        defaultCenter={defaultCordinates}
+        center={cordinates}
+        defaultZoom={14}
+        options={''}
+        onChange={(e) => {
+          setSearchButtonVisible(true);
+          setActualCordinates({ lat: e.center.lat, lng: e.center.lng });
+          setActualBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+        }}
+      >
+        {restaurants?.map((restaurant) => (
+          <PlaceMarker
+            lat={Number(restaurant.latitude)}
+            lng={Number(restaurant.longitude)}
+            place={restaurant}
+            key={restaurant.name}
+            markerClickHandler={handleMarkerClick}
+          />
+        ))}
+      </GoogleMapReact>
     </Box>
   );
 };

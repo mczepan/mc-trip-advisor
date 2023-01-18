@@ -1,19 +1,34 @@
 import React from 'react';
-import { Grid } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { Button, Grid } from '@mui/material';
 
 import PlaceDetails from 'components/molecules/PlaceDetails/PlaceDetails';
 import { useStyles } from './styles';
+import { setActiveRestaurant } from 'reducers/restaurants/restaurantsSlice';
 
-const PlaceList = ({ places }) => {
+const PlaceList = ({ places, activePlace }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handleRemoveActiveRestaurant = () =>
+    dispatch(setActiveRestaurant(null));
 
   return (
     <Grid container spacing={2} className={classes.gridContainer}>
-      {places?.map((place) => (
-        <Grid item xs={12} key={place.name}>
-          <PlaceDetails place={place} key={place.name} />
+      {activePlace ? (
+        <Grid item xs={12} key={activePlace.name}>
+          <Button onClick={handleRemoveActiveRestaurant}>
+            Usuń zaznaczenie
+          </Button>
+          <PlaceDetails place={activePlace} key={activePlace.name} />
         </Grid>
-      ))}
+      ) : (
+        places?.map((place) => (
+          <Grid item xs={12} key={place.name}>
+            <PlaceDetails place={place} key={place.name} />
+          </Grid>
+        ))
+      )}
     </Grid>
   );
 };

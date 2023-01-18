@@ -19,7 +19,7 @@ export const fetchRestaurantsInBoundary = createAsyncThunk(
 
 const initialStateRestaurants = {
   restaurants: [],
-  activeRestaurant: [],
+  activeRestaurant: null,
   loading: false,
   errorMessage: '',
 };
