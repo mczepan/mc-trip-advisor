@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleMapReact from 'google-map-react';
-import { Box, Button } from '@mui/material';
-import {
-  setMapBounds,
-  setMapCordinates,
-} from 'reducers/mapCordinates/mapCordinatesSlice';
-import { ColorButton, SearchButton, useStyles } from './styles';
+import { Box } from '@mui/material';
+import { setMapBounds } from 'reducers/mapCordinates/mapCordinatesSlice';
+import { SearchButton, useStyles } from './styles';
 import PlaceMarker from 'components/molecules/PlaceMarker/PlaceMarker';
 import { setActiveRestaurant } from 'reducers/restaurants/restaurantsSlice';
 
@@ -16,11 +13,10 @@ const Map = () => {
 
   const [searchButtonVisible, setSearchButtonVisible] = useState(false);
 
-  const [actualCordinates, setActualCordinates] = useState({});
   const [actualBounds, setActualBounds] = useState({});
 
-  const { defaultCordinates, cordinates } = useSelector(
-    (state) => state.mapCordinates
+  const { defaultCordinates } = useSelector(
+    (state) => state.mapCordinates || null
   );
 
   const { restaurants, loading } = useSelector((state) => state.restaurants);
@@ -30,7 +26,6 @@ const Map = () => {
   };
 
   const handleSearchButton = () => {
-    dispatch(setMapCordinates(actualCordinates));
     dispatch(setMapBounds(actualBounds));
     setSearchButtonVisible(false);
     dispatch(setActiveRestaurant(null));
@@ -48,30 +43,30 @@ const Map = () => {
         </SearchButton>
       ) : null}
 
-      <GoogleMapReact
-        bootstrapURLKeys={{
-          key: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
-        }}
-        defaultCenter={defaultCordinates}
-        center={cordinates}
-        defaultZoom={14}
-        options={''}
-        onChange={(e) => {
-          setSearchButtonVisible(true);
-          setActualCordinates({ lat: e.center.lat, lng: e.center.lng });
-          setActualBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
-        }}
-      >
-        {restaurants?.map((restaurant) => (
-          <PlaceMarker
-            lat={Number(restaurant.latitude)}
-            lng={Number(restaurant.longitude)}
-            place={restaurant}
-            key={restaurant.name}
-            markerClickHandler={handleMarkerClick}
-          />
-        ))}
-      </GoogleMapReact>
+      {defaultCordinates ? (
+        <GoogleMapReact
+          bootstrapURLKeys={{
+            key: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+          }}
+          defaultCenter={defaultCordinates}
+          defaultZoom={14}
+          options={''}
+          onChange={(e) => {
+            setSearchButtonVisible(true);
+            setActualBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+          }}
+        >
+          {restaurants?.map((restaurant) => (
+            <PlaceMarker
+              lat={Number(restaurant.latitude)}
+              lng={Number(restaurant.longitude)}
+              place={restaurant}
+              key={restaurant.name}
+              markerClickHandler={handleMarkerClick}
+            />
+          ))}
+        </GoogleMapReact>
+      ) : null}
     </Box>
   );
 };
