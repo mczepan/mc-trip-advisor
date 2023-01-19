@@ -14,6 +14,7 @@ import PriceLevel from 'components/atoms/PriceLevel/PriceLevel';
 import Ranking from 'components/atoms/Ranking/Ranking';
 import Address from 'components/atoms/Address/Address';
 import Phone from 'components/atoms/Phone/Phone';
+import CustomRating from 'components/atoms/Rating/Rating';
 
 import { useStyles } from './styles';
 
@@ -28,6 +29,8 @@ const PlaceDetails = ({
     phone,
     web_url,
     website,
+    rating,
+    num_reviews,
   },
 }) => {
   const classes = useStyles();
@@ -46,6 +49,7 @@ const PlaceDetails = ({
         <Typography gutterBottom variant="h6">
           {name}
         </Typography>
+        <CustomRating rating={rating} numReviews={num_reviews} />
         <PriceLevel priceLevel={price_level} />
         <Ranking ranking={ranking} />
         {cuisine?.map(({ name }) => (
@@ -88,5 +92,7 @@ PlaceDetails.propTypes = {
     phone: PropTypes.string,
     web_url: PropTypes.string,
     website: PropTypes.string,
+    rating: PropTypes.string,
+    num_reviews: PropTypes.string,
   }).isRequired,
 };
