@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 import { setMapBounds } from 'reducers/mapCordinates/mapCordinatesSlice';
 import { SearchButton, useStyles } from './styles';
 import PlaceMarker from 'components/molecules/PlaceMarker/PlaceMarker';
-import { setActiveRestaurant } from 'reducers/restaurants/restaurantsSlice';
+import { setActivePlace } from 'reducers/places/placesSlice';
 
 const Map = () => {
   const classes = useStyles();
@@ -19,22 +19,22 @@ const Map = () => {
     (state) => state.mapCordinates || null
   );
 
-  const { restaurants, isLoading, activeRestaurant } = useSelector(
-    (state) => state.restaurants
+  const { places, isLoading, activePlace } = useSelector(
+    (state) => state.places
   );
 
   const handleMarkerClick = (activeMarker) => {
-    if (activeMarker === activeRestaurant?.name) {
-      dispatch(setActiveRestaurant(null));
+    if (activeMarker === activePlace?.name) {
+      dispatch(setActivePlace(null));
     } else {
-      dispatch(setActiveRestaurant(activeMarker));
+      dispatch(setActivePlace(activeMarker));
     }
   };
 
   const handleSearchButton = () => {
     dispatch(setMapBounds(actualBounds));
     setSearchButtonVisible(false);
-    dispatch(setActiveRestaurant(null));
+    dispatch(setActivePlace(null));
   };
 
   return (
@@ -62,7 +62,7 @@ const Map = () => {
           }}
           onChildClick={handleMarkerClick}
         >
-          {restaurants?.map((restaurant) => (
+          {places?.map((restaurant) => (
             <PlaceMarker
               lat={Number(restaurant.latitude)}
               lng={Number(restaurant.longitude)}

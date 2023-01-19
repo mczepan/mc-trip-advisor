@@ -4,14 +4,13 @@ import { Button, Grid } from '@mui/material';
 
 import PlaceDetails from 'components/molecules/PlaceDetails/PlaceDetails';
 import { useStyles } from './styles';
-import { setActiveRestaurant } from 'reducers/restaurants/restaurantsSlice';
+import { setActivePlace } from 'reducers/places/placesSlice';
 
 const PlaceList = ({ places, activePlace }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleRemoveActiveRestaurant = () =>
-    dispatch(setActiveRestaurant(null));
+  const handleRemoveActiveRestaurant = () => dispatch(setActivePlace(null));
 
   return (
     <Grid container spacing={2} className={classes.gridContainer}>

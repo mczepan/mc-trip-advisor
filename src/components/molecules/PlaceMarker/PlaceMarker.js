@@ -6,7 +6,7 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import Marker from 'components/atoms/Marker/Marker';
-import { setActiveRestaurant } from 'reducers/restaurants/restaurantsSlice';
+import { setActivePlace } from 'reducers/places/placesSlice';
 
 import { useStyles } from './styles';
 
@@ -18,7 +18,7 @@ const PlaceMarker = ({ place }) => {
 
   const [isHovering, setIsHovering] = useState(false);
 
-  const { activeRestaurant } = useSelector((state) => state.restaurants);
+  const { activePlace } = useSelector((state) => state.places);
 
   const { name, photo, rating } = place;
 
@@ -30,8 +30,7 @@ const PlaceMarker = ({ place }) => {
     setIsHovering(false);
   };
 
-  const handleRemoveActiveRestaurant = () =>
-    dispatch(setActiveRestaurant(null));
+  const handleRemoveActiveRestaurant = () => dispatch(setActivePlace(null));
 
   return (
     <div>
@@ -43,7 +42,7 @@ const PlaceMarker = ({ place }) => {
       >
         {isMobile ? (
           <LocationOnOutlinedIcon color="primary" fontSize="large" />
-        ) : activeRestaurant?.name === name ? (
+        ) : activePlace?.name === name ? (
           <LocationOnIcon
             color="primary"
             fontSize="large"

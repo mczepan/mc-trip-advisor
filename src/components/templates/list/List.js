@@ -2,23 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
-import { fetchRestaurantsInBoundary } from 'reducers/restaurants/restaurantsSlice';
+import { fetchPlacesInBoundary } from 'reducers/places/placesSlice';
 
 import SelectFormControl from 'components/molecules/SelectFormControl/SelectFormControl';
 import PlaceList from 'components/organisms/PlaceList/PlaceList';
 import Loader from 'components/atoms/Loader/Loader';
 
 const List = () => {
+  const dispatch = useDispatch();
+
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
-  const dispatch = useDispatch();
-  const { restaurants, isLoading, activeRestaurant } = useSelector(
-    (state) => state.restaurants
+
+  const { places, isLoading, activePlace } = useSelector(
+    (state) => state.places
   );
   const { cordinates, bounds } = useSelector((state) => state.mapCordinates);
 
   useEffect(() => {
-    dispatch(fetchRestaurantsInBoundary(bounds));
+    dispatch(fetchPlacesInBoundary(bounds));
   }, [dispatch, cordinates, bounds]);
 
   return (
@@ -52,7 +54,7 @@ const List = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <PlaceList places={restaurants} activePlace={activeRestaurant} />
+        <PlaceList places={places} activePlace={activePlace} />
       )}
     </Box>
   );

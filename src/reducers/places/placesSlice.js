@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import request from 'common.js/api';
 
-export const fetchRestaurantsInBoundary = createAsyncThunk(
-  'restaurants/fetchRestaurantsInBoundary',
+export const fetchPlacesInBoundary = createAsyncThunk(
+  'places/fetchPlacesInBoundary',
   async ({ ne, sw }) => await axios.get('https://www.boredapi.com/api/activity')
 
   // async ({ ne, sw }) =>
@@ -17,29 +17,29 @@ export const fetchRestaurantsInBoundary = createAsyncThunk(
   //   })
 );
 
-const initialStateRestaurants = {
-  restaurants: [],
-  activeRestaurant: null,
+const initialStatePlaces = {
+  places: [],
+  activePlace: null,
   isLoading: false,
   errorMessage: '',
 };
 
-export const restaurantsSlice = createSlice({
+export const placesSlice = createSlice({
   name: 'notes',
-  initialState: initialStateRestaurants,
+  initialState: initialStatePlaces,
   reducers: {
-    setActiveRestaurant(state, action) {
-      state.activeRestaurant = state.restaurants.find(
+    setActivePlace(state, action) {
+      state.activePlace = state.places.find(
         ({ name }) => name === action.payload
       );
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchRestaurantsInBoundary.pending, (state, action) => {
+    builder.addCase(fetchPlacesInBoundary.pending, (state, action) => {
       state.isLoading = true;
-      state.restaurants = [];
+      state.places = [];
     });
-    builder.addCase(fetchRestaurantsInBoundary.fulfilled, (state, action) => {
+    builder.addCase(fetchPlacesInBoundary.fulfilled, (state, action) => {
       const data = {
         data: [
           {
@@ -1466,18 +1466,18 @@ export const restaurantsSlice = createSlice({
           },
         ],
       };
-      state.restaurants = data.data.filter((r) => r.name);
+      state.places = data.data.filter((r) => r.name);
 
-      // state.restaurants = action.payload.data.data.filter((r) => r.name);
+      // state.places = action.payload.data.data.filter((r) => r.name);
 
       state.isLoading = false;
     });
-    builder.addCase(fetchRestaurantsInBoundary.rejected, (state, action) => {
-      state.restaurants = [];
+    builder.addCase(fetchPlacesInBoundary.rejected, (state, action) => {
+      state.places = [];
       state.isLoading = false;
       state.error = action.error.message;
     });
   },
 });
 
-export const { setActiveRestaurant } = restaurantsSlice.actions;
+export const { setActivePlace } = placesSlice.actions;
