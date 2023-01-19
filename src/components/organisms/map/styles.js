@@ -9,6 +9,7 @@ export const useStyles = makeStyles((theme) => ({
     minHeight: '300px',
     width: '100%',
     textAlign: 'center',
+    position: 'relative',
   },
 }));
 

@@ -19,10 +19,16 @@ const Map = () => {
     (state) => state.mapCordinates || null
   );
 
-  const { restaurants, loading } = useSelector((state) => state.restaurants);
+  const { restaurants, loading, activeRestaurant } = useSelector(
+    (state) => state.restaurants
+  );
 
   const handleMarkerClick = (activeMarker) => {
-    dispatch(setActiveRestaurant(activeMarker));
+    if (activeMarker === activeRestaurant?.name) {
+      dispatch(setActiveRestaurant(null));
+    } else {
+      dispatch(setActiveRestaurant(activeMarker));
+    }
   };
 
   const handleSearchButton = () => {
@@ -42,7 +48,6 @@ const Map = () => {
           Szukaj
         </SearchButton>
       ) : null}
-
       {defaultCordinates ? (
         <GoogleMapReact
           bootstrapURLKeys={{
@@ -55,6 +60,7 @@ const Map = () => {
             setSearchButtonVisible(true);
             setActualBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
           }}
+          onChildClick={handleMarkerClick}
         >
           {restaurants?.map((restaurant) => (
             <PlaceMarker
@@ -62,7 +68,6 @@ const Map = () => {
               lng={Number(restaurant.longitude)}
               place={restaurant}
               key={restaurant.name}
-              markerClickHandler={handleMarkerClick}
             />
           ))}
         </GoogleMapReact>

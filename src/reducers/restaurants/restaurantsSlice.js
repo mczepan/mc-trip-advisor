@@ -29,7 +29,9 @@ export const restaurantsSlice = createSlice({
   initialState: initialStateRestaurants,
   reducers: {
     setActiveRestaurant(state, action) {
-      state.activeRestaurant = action.payload;
+      state.activeRestaurant = state.restaurants.find(
+        ({ name }) => name === action.payload
+      );
     },
   },
   extraReducers: (builder) => {

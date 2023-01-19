@@ -10,7 +10,7 @@ import { setActiveRestaurant } from 'reducers/restaurants/restaurantsSlice';
 
 import { useStyles } from './styles';
 
-const PlaceMarker = ({ place, markerClickHandler }) => {
+const PlaceMarker = ({ place }) => {
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -57,7 +57,6 @@ const PlaceMarker = ({ place, markerClickHandler }) => {
             className={classes.pointer}
             onClick={() => {
               handleMouseOut();
-              markerClickHandler(place);
             }}
           />
         )}
