@@ -20,7 +20,7 @@ export const fetchRestaurantsInBoundary = createAsyncThunk(
 const initialStateRestaurants = {
   restaurants: [],
   activeRestaurant: null,
-  loading: false,
+  isLoading: false,
   errorMessage: '',
 };
 
@@ -36,7 +36,7 @@ export const restaurantsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRestaurantsInBoundary.pending, (state, action) => {
-      state.loading = true;
+      state.isLoading = true;
       state.restaurants = [];
     });
     builder.addCase(fetchRestaurantsInBoundary.fulfilled, (state, action) => {
@@ -1470,11 +1470,11 @@ export const restaurantsSlice = createSlice({
 
       // state.restaurants = action.payload.data.data.filter((r) => r.name);
 
-      state.loading = false;
+      state.isLoading = false;
     });
     builder.addCase(fetchRestaurantsInBoundary.rejected, (state, action) => {
       state.restaurants = [];
-      state.loading = false;
+      state.isLoading = false;
       state.error = action.error.message;
     });
   },

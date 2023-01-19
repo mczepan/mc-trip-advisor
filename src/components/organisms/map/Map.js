@@ -19,7 +19,7 @@ const Map = () => {
     (state) => state.mapCordinates || null
   );
 
-  const { restaurants, loading, activeRestaurant } = useSelector(
+  const { restaurants, isLoading, activeRestaurant } = useSelector(
     (state) => state.restaurants
   );
 

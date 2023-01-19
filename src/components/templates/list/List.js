@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
 import { fetchRestaurantsInBoundary } from 'reducers/restaurants/restaurantsSlice';
 
 import SelectFormControl from 'components/molecules/SelectFormControl/SelectFormControl';
 import PlaceList from 'components/organisms/PlaceList/PlaceList';
+import Loader from 'components/atoms/Loader/Loader';
 
 const List = () => {
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
   const dispatch = useDispatch();
-  const { restaurants, loading, activeRestaurant } = useSelector(
+  const { restaurants, isLoading, activeRestaurant } = useSelector(
     (state) => state.restaurants
   );
   const { cordinates, bounds } = useSelector((state) => state.mapCordinates);
@@ -48,8 +49,8 @@ const List = () => {
       />
       <br />
 
-      {loading ? (
-        <span>Fetching places...</span>
+      {isLoading ? (
+        <Loader />
       ) : (
         <PlaceList places={restaurants} activePlace={activeRestaurant} />
       )}
