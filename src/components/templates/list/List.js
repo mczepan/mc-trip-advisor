@@ -17,11 +17,11 @@ const List = () => {
   const { places, isLoading, activePlace } = useSelector(
     (state) => state.places
   );
-  const { cordinates, bounds } = useSelector((state) => state.mapCordinates);
+  const { bounds } = useSelector((state) => state.mapCordinates);
 
   useEffect(() => {
-    dispatch(fetchPlacesInBoundary(bounds));
-  }, [dispatch, cordinates, bounds]);
+    dispatch(fetchPlacesInBoundary({ bounds, type, rating }));
+  }, [dispatch, bounds, type, rating]);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -42,9 +42,9 @@ const List = () => {
         label={'Rating'}
         items={[
           { value: 0, label: 'All' },
-          { value: 3, label: 'Above 3.0' },
-          { value: 4, label: 'Above 4.0' },
-          { value: 4.5, label: 'Above 4.5' },
+          { value: 3, label: '3.0' },
+          { value: 4, label: '4.0' },
+          { value: 5, label: '5.0' },
         ]}
         value={rating}
         setValue={(e) => setRating(e.target.value)}

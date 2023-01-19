@@ -4,15 +4,17 @@ import request from 'common.js/api';
 
 export const fetchPlacesInBoundary = createAsyncThunk(
   'places/fetchPlacesInBoundary',
-  async ({ ne, sw }) => await axios.get('https://www.boredapi.com/api/activity')
+  async ({ bounds: { ne, sw }, type }) =>
+    await axios.get('https://www.boredapi.com/api/activity')
 
-  // async ({ ne, sw }) =>
-  //   await request.get('/restaurants/list-in-boundary', {
+  // async ({ bounds: { ne, sw }, type, rating }) =>
+  //   await request.get(`/${type}/list-in-boundary`, {
   //     params: {
   //       bl_latitude: sw.lat,
   //       tr_latitude: ne.lat,
   //       bl_longitude: sw.lng,
   //       tr_longitude: ne.lng,
+  //       ...(rating && { min_rating: rating }),
   //     },
   //   })
 );
@@ -1467,7 +1469,6 @@ export const placesSlice = createSlice({
         ],
       };
       state.places = data.data.filter((r) => r.name);
-
       // state.places = action.payload.data.data.filter((r) => r.name);
 
       state.isLoading = false;
