@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { mapCordinates } from 'reducers/mapCordinates/mapCordinatesSlice';
-import { restaurantsSlice } from 'reducers/restaurants/restaurantsSlice';
+import { placesSlice } from 'reducers/places/placesSlice';
 
 export const store = configureStore({
   reducer: {
-    restaurants: restaurantsSlice.reducer,
+    places: placesSlice.reducer,
     mapCordinates: mapCordinates.reducer,
   },
   middleware: (getDefaultMiddleware) =>

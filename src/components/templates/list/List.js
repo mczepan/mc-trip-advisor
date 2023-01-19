@@ -2,24 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
-import { fetchRestaurantsInBoundary } from 'reducers/restaurants/restaurantsSlice';
+import { fetchPlacesInBoundary } from 'reducers/places/placesSlice';
 
 import SelectFormControl from 'components/molecules/SelectFormControl/SelectFormControl';
 import PlaceList from 'components/organisms/PlaceList/PlaceList';
 import Loader from 'components/atoms/Loader/Loader';
 
 const List = () => {
+  const dispatch = useDispatch();
+
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
-  const dispatch = useDispatch();
-  const { restaurants, isLoading, activeRestaurant } = useSelector(
-    (state) => state.restaurants
+
+  const { places, isLoading, activePlace } = useSelector(
+    (state) => state.places
   );
-  const { cordinates, bounds } = useSelector((state) => state.mapCordinates);
+  const { bounds } = useSelector((state) => state.mapCordinates);
 
   useEffect(() => {
-    dispatch(fetchRestaurantsInBoundary(bounds));
-  }, [dispatch, cordinates, bounds]);
+    dispatch(fetchPlacesInBoundary({ bounds, type, rating }));
+  }, [dispatch, bounds, type, rating]);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -40,9 +42,9 @@ const List = () => {
         label={'Rating'}
         items={[
           { value: 0, label: 'All' },
-          { value: 3, label: 'Above 3.0' },
-          { value: 4, label: 'Above 4.0' },
-          { value: 4.5, label: 'Above 4.5' },
+          { value: 3, label: '3.0' },
+          { value: 4, label: '4.0' },
+          { value: 5, label: '5.0' },
         ]}
         value={rating}
         setValue={(e) => setRating(e.target.value)}
@@ -52,7 +54,7 @@ const List = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <PlaceList places={restaurants} activePlace={activeRestaurant} />
+        <PlaceList places={places} activePlace={activePlace} />
       )}
     </Box>
   );
