@@ -17,6 +17,8 @@ import Phone from 'components/atoms/Phone/Phone';
 import CustomRating from 'components/atoms/Rating/Rating';
 
 import { useStyles } from './styles';
+import { setActivePlace } from 'reducers/places/placesSlice';
+import { useDispatch } from 'react-redux';
 
 const PlaceDetails = ({
   place: {
@@ -34,10 +36,14 @@ const PlaceDetails = ({
   },
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const DEFAULT_IMAGE =
     'https://img.freepik.com/free-vector/no-data-concept-illustration_114360-2506.jpg?w=1380&t=st=1673979253~exp=1673979853~hmac=4bfdf5ad84eaca6e5d81cd46498cf5710552a3d5e4a7ea23a0f2ee849787e1b3';
 
+  const handlePlaceClicked = () => {
+    dispatch(setActivePlace(name));
+  };
   return (
     <Card elevation={6}>
       <CardMedia
@@ -74,6 +80,15 @@ const PlaceDetails = ({
               Website
             </Button>
           ) : null}
+          <Button
+            size="small"
+            color="primary"
+            variant="outlined"
+            onClick={handlePlaceClicked}
+          >
+            {' '}
+            Find on map
+          </Button>
         </CardActions>
       </CardContent>
     </Card>
