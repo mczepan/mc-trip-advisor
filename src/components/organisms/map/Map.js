@@ -25,7 +25,6 @@ const Map = () => {
     if (activeMarker === activePlace?.name) {
       dispatch(setActivePlace(null));
     } else {
-      console.log(activeMarker);
       dispatch(setActivePlace(activeMarker));
     }
   };
@@ -44,7 +43,7 @@ const Map = () => {
           size="small"
           onClick={handleSearchButton}
         >
-          Szukaj
+          Find on map
         </SearchButton>
       ) : null}
       {defaultCordinates ? (

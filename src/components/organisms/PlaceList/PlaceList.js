@@ -17,7 +17,7 @@ const PlaceList = ({ places, activePlace }) => {
       {activePlace ? (
         <Grid item xs={12} key={activePlace.name}>
           <Button onClick={handleRemoveActiveRestaurant}>
-            Usuń zaznaczenie
+            Remove active place
           </Button>
           <PlaceDetails place={activePlace} key={activePlace.name} />
         </Grid>
