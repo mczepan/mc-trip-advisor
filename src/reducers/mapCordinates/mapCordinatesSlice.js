@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialStateMapCordinates = {
   defaultCordinates: null,
+  cordinates: null,
   bounds: null,
 };
 
@@ -15,11 +16,17 @@ export const mapCordinates = createSlice({
         lng: action.payload.lng,
       };
     },
-
+    setMapCordinates(state, action) {
+      state.cordinates = {
+        lat: action.payload.lat,
+        lng: action.payload.lng,
+      };
+    },
     setMapBounds(state, action) {
       state.bounds = { ne: action.payload.ne, sw: action.payload.sw };
     },
   },
 });
 
-export const { setMapBounds, setDefaultMapCordinates } = mapCordinates.actions;
+export const { setMapBounds, setDefaultMapCordinates, setMapCordinates } =
+  mapCordinates.actions;
