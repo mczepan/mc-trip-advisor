@@ -7,8 +7,6 @@ import { SearchButton, useStyles } from './styles';
 import PlaceMarker from 'components/molecules/PlaceMarker/PlaceMarker';
 import { setActivePlace } from 'reducers/places/placesSlice';
 
-const placesLibrary = ['places'];
-
 const Map = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -21,9 +19,7 @@ const Map = () => {
     (state) => state.mapCordinates || null
   );
 
-  const { places, isLoading, activePlace } = useSelector(
-    (state) => state.places
-  );
+  const { places, activePlace } = useSelector((state) => state.places);
 
   const handleMarkerClick = (activeMarker) => {
     if (activeMarker === activePlace?.name) {
