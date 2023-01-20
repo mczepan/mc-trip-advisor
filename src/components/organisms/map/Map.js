@@ -7,6 +7,8 @@ import { SearchButton, useStyles } from './styles';
 import PlaceMarker from 'components/molecules/PlaceMarker/PlaceMarker';
 import { setActivePlace } from 'reducers/places/placesSlice';
 
+const placesLibrary = ['places'];
+
 const Map = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const Map = () => {
 
   const [actualBounds, setActualBounds] = useState({});
 
-  const { defaultCordinates } = useSelector(
+  const { defaultCordinates, cordinates } = useSelector(
     (state) => state.mapCordinates || null
   );
 
@@ -27,6 +29,7 @@ const Map = () => {
     if (activeMarker === activePlace?.name) {
       dispatch(setActivePlace(null));
     } else {
+      console.log(activeMarker);
       dispatch(setActivePlace(activeMarker));
     }
   };
@@ -52,8 +55,10 @@ const Map = () => {
         <GoogleMapReact
           bootstrapURLKeys={{
             key: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+            libraries: ['places'],
           }}
           defaultCenter={defaultCordinates}
+          center={cordinates}
           defaultZoom={14}
           options={''}
           onChange={(e) => {
