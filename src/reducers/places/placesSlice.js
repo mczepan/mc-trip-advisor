@@ -39,7 +39,6 @@ export const placesSlice = createSlice({
     });
     builder.addCase(fetchPlacesInBoundary.fulfilled, (state, action) => {
       state.places = action.payload.data.data.filter((r) => r.name);
-
       state.isLoading = false;
     });
     builder.addCase(fetchPlacesInBoundary.rejected, (state, action) => {

@@ -6,12 +6,14 @@ import { setMapBounds } from 'reducers/mapCordinates/mapCordinatesSlice';
 import { SearchButton, useStyles } from './styles';
 import PlaceMarker from 'components/molecules/PlaceMarker/PlaceMarker';
 import { setActivePlace } from 'reducers/places/placesSlice';
+import { useEffect } from 'react';
 
 const Map = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const [searchButtonVisible, setSearchButtonVisible] = useState(false);
+  const [searchPlacesAvailabe, setSearchPlacesAvailabe] = useState(true);
 
   const [actualBounds, setActualBounds] = useState({});
 
@@ -20,6 +22,13 @@ const Map = () => {
   );
 
   const { places, activePlace } = useSelector((state) => state.places);
+
+  useEffect(() => {
+    if (searchPlacesAvailabe && JSON.stringify(actualBounds) !== '{}') {
+      dispatch(setMapBounds(actualBounds));
+      setSearchPlacesAvailabe(false);
+    }
+  }, [actualBounds, setSearchPlacesAvailabe, searchPlacesAvailabe, dispatch]);
 
   const handleMarkerClick = (activeMarker) => {
     if (activeMarker === activePlace?.name) {
