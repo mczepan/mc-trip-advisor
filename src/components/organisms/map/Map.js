@@ -27,6 +27,7 @@ const Map = () => {
     if (searchPlacesAvailabe && JSON.stringify(actualBounds) !== '{}') {
       dispatch(setMapBounds(actualBounds));
       setSearchPlacesAvailabe(false);
+      setSearchButtonVisible(false);
     }
   }, [actualBounds, setSearchPlacesAvailabe, searchPlacesAvailabe, dispatch]);
 
