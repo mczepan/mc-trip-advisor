@@ -42,9 +42,9 @@ const List = () => {
         label={'Rating'}
         items={[
           { value: 0, label: 'All' },
-          { value: 3, label: '3.0' },
-          { value: 4, label: '4.0' },
-          { value: 5, label: '5.0' },
+          { value: 3, label: '> 3.0' },
+          { value: 4, label: '> 4.0' },
+          { value: 5, label: '= 5.0' },
         ]}
         value={rating}
         setValue={(e) => setRating(e.target.value)}
